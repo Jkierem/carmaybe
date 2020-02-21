@@ -7,6 +7,8 @@ const int pwmBPin = 5;    // define pin for PWM used to control rotational speed
 
 const bool BACKWARDS = true;
 const bool FORWARDS = false;
+const int FULL = 255;
+const int HALF = 128;
 
 const int WKey = 119;
 const int AKey = 97;
@@ -16,6 +18,13 @@ const int EKey = 101;
 const int QKey = 113;
 const int SpaceKey = 32;
 const int NONE = 256;
+
+const int Forwards = 20;
+const int Backwards = 10;
+const int ForRight = 22;
+const int ForLeft = 21;
+const int BackRight = 12;
+const int BackLeft = 11;
 
 int in = 0;
 
@@ -90,20 +99,26 @@ class Car {
 
     void execute(){
       switch(this->mode){
-        case WKey:
-         this->goForwards();
-         break;
-        case SpaceKey:
-          this->brake();
+        case Forwards:
+          this->goForwards();
           break;
-        case SKey:
+        case Backwards:
           this->goBackwards();
           break;
-        case DKey:
-          this->rotateClockwise();
+        case ForLeft:
+          this->control(HALF,FULL,FORWARDS);
           break;
-        case AKey:
-          this->rotateCounterClockwise();
+        case ForRight:
+          this->control(FULL,HALF,FORWARDS);
+          break;
+        case BackLeft:
+          this->control(HALF,FULL,BACKWARDS);
+          break;
+        case BackRight:
+          this->control(FULL,HALF,BACKWARDS);
+          break;
+        default:
+          this->brake();
           break;
       }
     }
