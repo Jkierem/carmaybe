@@ -11,7 +11,7 @@ int units = 0;
 int decs = 0;
 int NONE = 0;
 int last = -1;
-int saved = 10;
+int saved = 15;
 
 void setup()
 {
@@ -29,6 +29,7 @@ void send(int s){
   if( last != s ){
     last = s;
     saved = 10;
+    //println(s);
     myPort.write(s);
   } else {
     saved--;

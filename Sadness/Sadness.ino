@@ -25,6 +25,8 @@ const int ForRight = 22;
 const int ForLeft = 21;
 const int BackRight = 12;
 const int BackLeft = 11;
+const int RotLeft = 1;
+const int RotRight = 2;
 
 int in = 0;
 
@@ -116,6 +118,12 @@ class Car {
           break;
         case BackRight:
           this->control(FULL,HALF,BACKWARDS);
+          break;
+        case RotLeft:
+          this->rotateCounterClockwise();
+          break;
+        case RotRight:
+          this->rotateClockwise();
           break;
         default:
           this->brake();
