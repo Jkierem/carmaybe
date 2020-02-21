@@ -1,7 +1,15 @@
 import processing.serial.*;
 
 Serial myPort;  // Create object from Serial class
-String val;     // Data received from the serial port
+
+boolean W = false;
+boolean S = false;
+boolean D = false;
+boolean A = false;
+
+int units = 0;
+int decs = 0;
+int NONE = 0;
 
 void setup()
 {
@@ -14,6 +22,59 @@ void setup()
   myPort = new Serial(this, "/dev/ttyACM0", 9600);
 }
 
+void send(int s){
+  myPort.write(s);
+}
+
 void draw(){
-  myPort.write('1');
+  if( W || S || A || D ){
+    if( A ){
+      units = 2;
+    } else if( D ){
+      units = 1;
+    } else {
+      units = 0;
+    }
+    
+    if( W ){
+      decs = 2;
+    }else if( S ){
+      decs = 1;
+    }else {
+      decs = 0;
+    }
+    send((decs * 10) + units);
+  }else{
+    send(NONE);
+  }
+}
+
+void keyPressed(){
+  if( key == 'w' || key == 'W' ){
+    W = true;
+  }
+  if( key == 'd' || key == 'D' ){
+    D = true;
+  }
+  if( key == 's' || key == 'S' ){
+    S = true;
+  }
+  if( key == 'a' || key == 'A' ){
+    A = true;
+  }
+}
+
+void keyReleased(){
+  if( key == 'w' || key == 'W' ){
+    W = false;
+  }
+  if( key == 'd' || key == 'D' ){
+    D = false;
+  }
+  if( key == 's' || key == 'S' ){
+    S = false;
+  }
+  if( key == 'a' || key == 'A' ){
+    A = false;
+  }
 }
