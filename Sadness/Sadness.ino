@@ -152,5 +152,5 @@ void loop() {
    int in = readByte(true);
    car.changeMode(in);
    car.execute();
-   delay(100);
+   delay(600);
 }
