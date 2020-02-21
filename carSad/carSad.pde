@@ -10,9 +10,11 @@ boolean A = false;
 int units = 0;
 int decs = 0;
 int NONE = 0;
+int last = -1;
 
 void setup()
 {
+  frameRate(20);
   // I know that the first port in the serial list on my mac
   // is Serial.list()[0].
   // On Windows machines, this generally opens COM1.
@@ -23,7 +25,10 @@ void setup()
 }
 
 void send(int s){
-  myPort.write(s);
+  if( last != s ){
+    last = s;
+    myPort.write(s);
+  }
 }
 
 void draw(){
@@ -45,7 +50,7 @@ void draw(){
     }
     send((decs * 10) + units);
   }else{
-    send(NONE);
+     send(NONE);
   }
 }
 
